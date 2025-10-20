@@ -3,7 +3,7 @@ use crate::data::MixedType;
 
 pub fn process_data<T>(mut data: Vec<T>) -> Vec<T>
 where
-    T: Processable + Ord + Clone,
+    T: Processable + Ord,
 {
     data.sort_by(|a, b| {
         let ka = a.key();
