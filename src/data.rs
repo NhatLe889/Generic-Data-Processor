@@ -1,10 +1,16 @@
 use crate::traits::Processable;
-use std::cmp::Ordering;
+use std::{cmp::Ordering, fmt::format};
 
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct Person {
     pub name: String,
     pub age: u32,
+}
+
+#[derive(Debug)]
+pub struct Dog<'a>{
+    pub owner: &'a Person,
+    pub name: String
 }
 
 #[derive(Debug)]
@@ -20,6 +26,41 @@ impl Person {
             name: name.to_string(),
             age,
         }
+    }
+}
+
+impl<'a> Dog<'a> {
+    pub fn new(owner: &'a Person, name: &str) -> Self {
+        Self {
+            owner,
+            name: name.to_string(),
+        }
+    }
+}
+
+impl<'a> Processable for Dog<'a> {
+    fn key(&self) -> String {
+        format!("{}_{}", self.name, self.owner.name)
+    }
+}
+
+impl<'a> PartialEq for Dog<'a> {
+    fn eq(&self, other: &Self) -> bool {
+        self.key() == other.key()
+    }
+}
+
+impl<'a> Eq for Dog<'a> {}
+
+impl<'a> PartialOrd for Dog<'a> {
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        Some(self.key().cmp(&other.key()))
+    }
+}
+
+impl<'a> Ord for Dog<'a> {
+    fn cmp(&self, other: &Self) -> Ordering {
+        self.key().cmp(&other.key())
     }
 }
 

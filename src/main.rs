@@ -30,10 +30,21 @@ fn main() {
         MixedType::Text("ZMM".to_string()),
     ];
 
+    let person1 = Person::new("Jordan", 23);
+    let person2 = Person::new("Ronny", 35);
+    let person3 = Person::new("Bruce", 45);
+    let dog = vec![
+        Dog::new(&person1, "Cupcake"),
+        Dog::new(&person2, "Rocket"),
+        Dog::new(&person3, "Jeff"),
+    ];
+
     //Using Generic Processor
     println!("Sorted numbers: {:?}", process_data(numbers));
     println!("Sorted words: {:?}", process_data(words));
     println!("Sorted people: {:?}", process_data(people));
 
     println!("Sorted Mixed type: {:?}", mixed_process_data(unicorn_test));
+
+    println!("Sorted Dog: {:?}", process_data(dog));
 }
